@@ -15,3 +15,44 @@ services:
 
 volumes:
   postgres_data:
+<<<<<<< HEAD
+=======
+
+#version: '3.8'
+#
+#services:
+#  db:
+#    image: postgres:15
+#    container_name: bagstore-postgres
+#    restart: always
+#    environment:
+#      POSTGRES_DB: bagstore
+#      POSTGRES_USER: root
+#      POSTGRES_PASSWORD: root
+#    ports:
+#      - "5436:5432"
+#    volumes:
+#      - postgres_data:/var/lib/postgresql/data
+#
+#  my-bagstore-service:
+#    depends_on:
+#      - db
+#    build:
+#      context: ..        # предполагается, что Dockerfile в корне
+#      dockerfile: docker/Dockerfile
+#    image: 'my-bagstore-service'
+#    container_name: 'my-bagstore-service-container'
+#    environment:
+#      DB_HOST: db
+#      DB_PORT: 5432
+#      DB_USER: root
+#      DB_PASSWORD: root
+#      DB_NAME: bagstore
+#    ports:
+#      - "8889:8081"
+#    volumes:
+#      - ./internal/db/migrations:/app/internal/db/migrations
+#
+#volumes:
+#  postgres_data:
+>>>>>>> be3f14a (Initial commit)
