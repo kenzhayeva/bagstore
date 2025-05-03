@@ -35,3 +35,29 @@ func AuthRequired() gin.HandlerFunc {
 		c.Next()
 	}
 }
+
+func AdminOnly() gin.HandlerFunc {
+	return func(c *gin.Context) {
+		authHeader := c.GetHeader("Authorization")
+		if authHeader == "" || !strings.HasPrefix(authHeader, "Bearer ") {
+			c.AbortWithStatusJSON(http.StatusUnauthorized, gin.H{"error": "Заголовок авторизации отсутствует или неправильно сформирован"})
+			return
+		}
+
+		tokenStr := strings.TrimPrefix(authHeader, "Bearer ")
+
+		_, claims, err := authorization.ValidateJWT(tokenStr)
+		if err != nil {
+			c.AbortWithStatusJSON(http.StatusUnauthorized, gin.H{"error": "недопустимый токен"})
+			return
+		}
+
+		role, ok := claims["role"].(string)
+		if !ok || role != "admin" {
+			c.AbortWithStatusJSON(http.StatusForbidden, gin.H{"error": "Доступ только для администраторов"})
+			return
+		}
+
+		c.Next()
+	}
+}
