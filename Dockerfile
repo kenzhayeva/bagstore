@@ -2,7 +2,7 @@ FROM golang:1.23.0 AS builder
 WORKDIR /app
 COPY go.mod ./
 RUN go mod download
-COPY . .
+COPY .. .
 RUN go build -o main ./main.go
 
 FROM ubuntu:22.04
